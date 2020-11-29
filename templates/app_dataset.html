@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="web/jquery.min.js"></script>
+    <script type="text/javascript">
+    window.onload=function(){
+        var label_json={{ json| safe }}
+        var re=label_json.rect_expression
+        var exp=label_json.expression
+
+
+
+        var width=re[2]
+
+
+        var last_end=-1
+
+        var i
+        for(i=0;i<exp.length;i+=1){
+
+
+            var char=exp[i]
+
+            //半个格子对应图片上的长度
+            var half=(width/41)*0.5
+            console.log(char.rect_char[0],char.rect_char[0]+char.rect_char[2])
+            var char_start=Math.round(((char.rect_char[0])*41)/width)+1
+            var char_end=Math.round(((char.rect_char[0]+char.rect_char[2])*41)/width)+1
+            var i_anno
+
+
+
+
+            for(i_anno=char_start;i_anno<char_end;i_anno+=1)
+                $("#anno_"+(i_anno)).val(char.char)
+            console.log(char_start,char_end)
+
+            if(last_end-1>=char_start-1){
+                $("#anno_"+(char_start)).val(" ")
+            }
+            last_end=char_end
+        }
+
+        function update(){
+            var i_anno
+            var anno=""
+            for(i_anno=1;i_anno<42;i_anno+=1){
+   
+                var char=$("#anno_"+(i_anno)).val()
+                if(char==""||char==" "){
+                    anno+="`"
+                }else{
+                    anno+=char
+                }
+            }
+
+            $.post("write_anno",{
+            //给哪个页面发送网络请求  url取  域名后面的所有东西
+            'url': "write_anno",
+            //data是发送过去的数据s
+            'data':{
+                'line': "{{picture_name}} "+anno
+            },
+            //如果网络请求发送成功，就会执行success里面的函数
+            //请求成功 是状态码等于200就会执行success里面的函数 
+            //否则执行fail里面的函数
+            'success': function(data){
+                 //data是服务器发送过来的数据
+                 //如果服务器发送过来的是json数据，那么JS底层会将json进行解析
+                 //比如 服务器发送过来的是JSON类型的字典，那么JS底层会将JSOn数据转换成一个对象          if(data['code']==200){
+                 
+                 console.log(data)
+            },
+            //如果网络请求发送失败，就会执行fail里面的函数
+            'fail': function(error){
+                console.log(error)
+            }
+         })
+        }
+
+
+
+
+
+        $("#button_update").click(update)
+        $("#button_next").click(update)
+    };
+
+
+
+
+
+    </script>
+    <style>
+        img {
+            width: 640px;
+            height: 128px;
+
+        }
+
+        input {
+            
+            float: left;
+            
+            width: 15.6px;
+            height: 20;
+            border-right-width: 0px;
+            border-left-width: 0px;
+            /* box-shadow: 0 0 0 0 px #03A9F4; */
+            padding: 0px;
+            text-align:center;
+        }
+        .even {
+            /* box-shadow: 0px 64px 0px #888888; */
+            background-color: bisque;
+        }
+        .lines{
+            width: 14.6px;
+            height: 128px;
+            border-right: 1px solid blanchedalmond;
+            float: left;;
+            /* border: ; */
+        }
+        #main {
+            width: 640px;
+            height: 128px;
+            background:url({{rect_picutre}}) no-repeat;
+            background-size: 640px 128px;
+        }
+        #top {
+            width: 640px;
+            height: 20px;
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div >
+
+        
+        <input id="anno_1" type="text" maxlength="1" class="even" value="">
+        <input id="anno_2" type="text" maxlength="1" value="">
+        <input id="anno_3" type="text" maxlength="1" class="even" value="">
+        <input id="anno_4" type="text" maxlength="1" value="">
+        <input id="anno_5" type="text" maxlength="1" class="even" value="">
+        <input id="anno_6" type="text" maxlength="1" value="">
+        <input id="anno_7" type="text" maxlength="1" class="even" value="">
+        <input id="anno_8" type="text" maxlength="1" value="">
+        <input id="anno_9" type="text" maxlength="1" class="even" value="">
+        <input id="anno_10" type="text" maxlength="1" value="">
+        <input id="anno_11" type="text" maxlength="1" class="even" value="">
+        <input id="anno_12" type="text" maxlength="1" value="">
+        <input id="anno_13" type="text" maxlength="1" class="even" value="">
+        <input id="anno_14" type="text" maxlength="1" value="">
+        <input id="anno_15" type="text" maxlength="1" class="even" value="">
+        <input id="anno_16" type="text" maxlength="1" value="">
+        <input id="anno_17" type="text" maxlength="1" class="even" value="">
+        <input id="anno_18" type="text" maxlength="1" value="">
+        <input id="anno_19" type="text" maxlength="1" class="even" value="">
+        <input id="anno_20" type="text" maxlength="1" value=""> 
+        <input id="anno_21" type="text" maxlength="1" class="even" value="">
+        <input id="anno_22" type="text" maxlength="1" value="">
+        <input id="anno_23" type="text" maxlength="1" class="even" value="">
+        <input id="anno_24" type="text" maxlength="1" value="">
+        <input id="anno_25" type="text" maxlength="1" class="even" value="">
+        <input id="anno_26" type="text" maxlength="1" value="">
+        <input id="anno_27" type="text" maxlength="1" class="even" value="">
+        <input id="anno_28" type="text" maxlength="1" value="">
+        <input id="anno_29" type="text" maxlength="1" class="even" value="">
+        <input id="anno_30" type="text" maxlength="1" value="">
+        <input id="anno_31" type="text" maxlength="1" class="even" value="">
+        <input id="anno_32" type="text" maxlength="1" value="">
+        <input id="anno_33" type="text" maxlength="1" class="even" value="">
+        <input id="anno_34" type="text" maxlength="1" value="">
+        <input id="anno_35" type="text" maxlength="1" class="even" value="">
+        <input id="anno_36" type="text" maxlength="1" value="">
+        <input id="anno_37" type="text" maxlength="1" class="even" value="">
+        <input id="anno_38" type="text" maxlength="1" value="">
+        <input id="anno_39" type="text" maxlength="1" class="even" value="">
+        <input id="anno_40" type="text" maxlength="1" value="">
+        <input id="anno_41" type="text" maxlength="1" class="even" value="">
+
+
+    </div>
+    <div id="top"></div>
+    <div id="main">
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+        <div class="lines"></div>
+    </div>
+    <a href="/{{prev}}">prev</a>
+
+    <a id="button_next" href="/{{next}}">next</a>
+
+    <button id="button_update" type="button">update</button>
+    <!-- <img src="2.png" alt=""></img> -->
+</body>
+
+</html>

@@ -1,0 +1,9 @@
+.idea/
+*.jpg
+*.png
+*.pth
+*.zip
+
+*__pycache__
+
+resjson/

@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Monkey测试结果检测</title>
+    <script>
+    $('.submit').click(function () {
+        var crowd_name = $.trim($('#upload_crowd_name').val());
+        var crowd_desc = $.trim($('#upload_crowd_desc').val());
+        var crowd_file = $('#crowd_file')[0].files[0];
+    
+        var formData = new FormData();
+    
+        formData.append("crowd_file",$('#crowd_file')[0].files[0]);
+        formData.append("crowd_name", crowd_name);
+        formData.append("crowd_desc", crowd_desc);
+    
+        $.ajax({
+            url:'/upload/',
+            dataType:'json',
+            type:'POST',
+            async: false,
+            data: formData,
+            processData : false, // 使数据不做处理
+            contentType : false, // 不要设置Content-Type请求头
+            success: function(data){
+                console.log(data);
+                if (data.status == 'ok') {
+                    alert('上传成功！');
+                }
+    
+            },
+            error:function(response){
+                console.log(response);
+            }
+        });
+    
+    })
+    </script>
+</head>
+<body>
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h1>Monkey 测试</h1><small>monkey_test</small><br>
+        请输入测试执行人：<input type="text" name="people"><br>
+        请输入测试 版本 &nbsp;：<input type="text" name="version"><br>
+        请上传monkey日志文件：<br>
+        <input type="file" name="myfile"><br>
+        <input type="submit" value="上传">
+    </form>
+ 
+    <h1>分析结果：</h1><hr>
+    <table border="1">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>测试执行人</td>
+                <td>测试执行版本</td>
+                <td>BUG数量统计</td>
+                <td>备注</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{'people'}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    se
+</body>
+</html>
